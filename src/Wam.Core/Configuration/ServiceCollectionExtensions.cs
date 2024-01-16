@@ -14,6 +14,7 @@ public static class ServiceCollectionExtensions
         bool skipApplicationInsights = false)
     {
         var azureServicesOptions = configuration.GetSection(AzureServices.SectionName).Get<AzureServices>();
+        services.AddHealthChecks();
         services.AddOptions<AzureServices>().Bind(configuration.GetSection(AzureServices.SectionName)); //.ValidateOnStart();
         services.AddAzureClients(builder =>
         {
