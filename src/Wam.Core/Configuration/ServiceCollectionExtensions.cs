@@ -11,6 +11,8 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        var identity = CloudIdentity.GetCloudIdentity();
+
         var positionOptions = configuration.GetSection(AzureServices.SectionName).Get<AzureServices>();
         services.AddOptions<AzureServices>().Bind(configuration.GetSection(AzureServices.SectionName)); //.ValidateOnStart();
         services.AddAzureClients(builder =>
