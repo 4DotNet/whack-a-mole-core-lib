@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 using Wam.Core.Identity;
 
 namespace Wam.Core.Configuration;
@@ -10,18 +11,22 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWamCoreConfiguration(
         this IServiceCollection services,
-        IConfiguration configuration,
+        [NotNull] IConfiguration configuration,
         bool skipApplicationInsights = false)
     {
-        var azureServicesOptions = configuration.GetSection(AzureServices.SectionName).Get<AzureServices>();
+        var azureServicesOptions = configuration
+            .GetSection(AzureServices.SectionName)
+            .Get<AzureServices>()
+            ?? throw new InvalidOperationException("Missing Azure Services configuration");
+
         services.AddHealthChecks();
-        services.AddOptions<AzureServices>().Bind(configuration.GetSection(AzureServices.SectionName)); //.ValidateOnStart();
+        services.AddOptions<AzureServices>().Bind(configuration.GetRequiredSection(AzureServices.SectionName));
         services.AddAzureClients(builder =>
         {
             builder.AddWebPubSubServiceClient(
                 new Uri(azureServicesOptions.WebPubSubEndpoint),
                 azureServicesOptions.WebPubSubHub,
-                CloudIdentity.GetCloudIdentity());
+                CloudIdentity.GetCloudIdentity);
         });
 
         if (!skipApplicationInsights)

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <WarningLevel>6</WarningLevel>
+    <WarningsAsErrors></WarningsAsErrors>
+    <NoWarn>CS1591;CA5349</NoWarn>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>All</AnalysisMode>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Authors>4DotNet</Authors>
+    <Title>Whack-A-Mole Core Library</Title>
+    <Company>4Dotnet Whack-A-Mole Team</Company>
+    <Copyright>(c) 2024 - rights reserved</Copyright>
+    <Product>WAM.Core</Product>
+    <ProductName>Whack-a-mole core</ProductName>
+    <ProductVersion>1.0.0</ProductVersion>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup Label ="Dotnet build visibility">
+    <CompilerVisibleProperty Include="RootNamespace" />
+    <CompilerVisibleProperty Include="ProjectDir" />
+  </ItemGroup>
+  
+  <ItemGroup Label="Analyzers">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.CodeStyle" />
+    <PackageReference Include="Roslynator.Analyzers" />
+    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" />
+    <PackageReference Include="Roslynator.Formatting.Analyzers" />
+    <PackageReference Include="SonarAnalyzer.CSharp" />
+    <PackageReference Include="AsyncFixer" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" />
+    <PackageReference Include="Microsoft.Azure.Functions.Analyzers" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Analyzers" />
+  </ItemGroup>
+</Project>

@@ -6,7 +6,7 @@ public static class ConfigurationExtensions
 {
     public static string GetRequiredValue(this IConfiguration configuration, string key, string? description = null)
     {
-        string value = configuration.GetValue<string>(key);
+        var value = configuration.GetValue<string>(key)??string.Empty;
         if (string.IsNullOrWhiteSpace(value))
         {
             throw new InvalidOperationException("Missing setting " + ((description != null) ? ("for " + description) : "") + " : " + key);

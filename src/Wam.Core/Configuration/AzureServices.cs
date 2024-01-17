@@ -3,8 +3,8 @@
 public class AzureServices
 {
     public const string SectionName = "AzureServices";
-    public string WebPubSubEndpoint { get; set; }
-    public string WebPubSubHub{ get; set; }
-    public string UsersStorageAccountName { get; set; }
-    public string GamesStorageAccountName { get; set; }
+    public string WebPubSubEndpoint { get; set; } = string.Empty;
+    public string WebPubSubHub{ get; set; } = string.Empty;
+    public string UsersStorageAccountName { get; set; } = string.Empty;
+    public string GamesStorageAccountName { get; set; } = string.Empty;
 }
