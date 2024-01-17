@@ -8,9 +8,10 @@ public static class StringExtensions
     public static string GenerateGameCode(int length = 6)
     {
         var result = new string(
-                       Enumerable.Repeat(Chars, length)
-                                      .Select(s => s[RandomNumberGenerator.GetInt32(s.Length)])
-                                      .ToArray());
+            Enumerable
+            .Repeat(Chars, length)
+            .Select(s => s[RandomNumberGenerator.GetInt32(s.Length)])
+            .ToArray());
         return result;
     }
 }
