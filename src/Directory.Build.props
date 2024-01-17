@@ -3,7 +3,7 @@
   <PropertyGroup>
     <WarningLevel>6</WarningLevel>
     <WarningsAsErrors></WarningsAsErrors>
-    <NoWarn>CS1591;CA5349</NoWarn>
+    <NoWarn>CS1591;CA5349;CA1040</NoWarn>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
