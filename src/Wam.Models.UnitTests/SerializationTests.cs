@@ -9,7 +9,7 @@ namespace Wam.Models.UnitTests;
 public class SerializationTests
 {
     private readonly Action<string> log = Console.WriteLine;
-    private readonly JsonSerializationHelper jsonSerialization = new JsonSerializationHelper();
+    private readonly NewtonsoftSerializationHelper jsonSerialization = new NewtonsoftSerializationHelper();
     private readonly SystemTextSerializationHelper systemSerialization = new SystemTextSerializationHelper();
 
     [TestMethod]
