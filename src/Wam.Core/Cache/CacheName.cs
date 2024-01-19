@@ -2,8 +2,8 @@
 
 public static class CacheName
 {
-    public static string UserDetails(Guid userId) => $"UserDetails:{userId:N}";
+    public static string UserDetails(Guid userId) => $"wam:user:id:{userId:N}";
 
-    public static string GameDetails(Guid userId) => $"GameDetails:Id:{userId:N}";
-    public static string GameDetails(string gameCode) => $"GameDetails:Code:{gameCode}";
+    public static string GameDetails(Guid gameId) => $"wam:game:id:{gameId:N}";
+    public static string GameDetails(string gameCode) => $"wam:game:code:{gameCode}";
 }
