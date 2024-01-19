@@ -16,6 +16,8 @@ public static class ServiceCollectionExtensions
         var azureServicesOptions = configuration.GetSection(AzureServices.SectionName).Get<AzureServices>();
         services.AddHealthChecks();
         services.AddOptions<AzureServices>().Bind(configuration.GetSection(AzureServices.SectionName)); //.ValidateOnStart();
+        services.AddOptions<ServicesConfiguration>().Bind(configuration.GetSection(ServicesConfiguration.SectionName)); //.ValidateOnStart();
+
         services.AddAzureClients(builder =>
         {
             builder.AddWebPubSubServiceClient(
