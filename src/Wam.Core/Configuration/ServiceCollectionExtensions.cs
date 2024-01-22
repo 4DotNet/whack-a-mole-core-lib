@@ -20,7 +20,9 @@ public static class ServiceCollectionExtensions
             ?? throw new InvalidOperationException("Missing Azure Services configuration");
 
         services.AddHealthChecks();
-        services.AddOptions<AzureServices>().Bind(configuration.GetRequiredSection(AzureServices.SectionName));
+        services.AddOptions<AzureServices>().Bind(configuration.GetSection(AzureServices.SectionName)); //.ValidateOnStart();
+        services.AddOptions<ServicesConfiguration>().Bind(configuration.GetSection(ServicesConfiguration.SectionName)); //.ValidateOnStart();
+
         services.AddAzureClients(builder =>
         {
             builder.AddWebPubSubServiceClient(
