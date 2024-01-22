@@ -8,5 +8,5 @@ public static class CloudIdentity
     public static TokenCredential GetCloudIdentity =>  new ChainedTokenCredential(
             new ManagedIdentityCredential(),
             new VisualStudioCredential(),
-            new AzureCliCredential());    
+            new AzureCliCredential());
 }

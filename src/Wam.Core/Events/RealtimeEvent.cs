@@ -19,6 +19,5 @@ public class RealtimeEvent<T>
             ContractResolver = contractResolver,
             Formatting = Formatting.None
         });
-
     }
 }
