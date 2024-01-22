@@ -9,6 +9,8 @@ namespace Wam.Core.Configuration;
 
 public static class ServiceCollectionExtensions
 {
+    private const string MissingConfigMessage = "Missing Azure Services configuration";
+
     public static IServiceCollection AddWamCoreConfiguration(
         this IServiceCollection services,
         [NotNull] IConfiguration configuration,
@@ -17,16 +19,20 @@ public static class ServiceCollectionExtensions
         var azureServicesOptions = configuration
             .GetSection(AzureServices.SectionName)
             .Get<AzureServices>()
-            ?? throw new InvalidOperationException("Missing Azure Services configuration");
+            ?? throw new InvalidOperationException(MissingConfigMessage);
 
         services.AddHealthChecks();
-        services.AddOptions<AzureServices>().Bind(configuration.GetSection(AzureServices.SectionName)); //.ValidateOnStart();
-        services.AddOptions<ServicesConfiguration>().Bind(configuration.GetSection(ServicesConfiguration.SectionName)); //.ValidateOnStart();
+        services.AddOptions<AzureServices>().Bind(configuration.GetSection(AzureServices.SectionName));
+        services.AddOptions<ServicesConfiguration>().Bind(configuration.GetSection(ServicesConfiguration.SectionName));
+
+        string webPubSubEndpoint =
+            azureServicesOptions.WebPubSubEndpoint
+            ?? throw new InvalidOperationException(MissingConfigMessage);
 
         services.AddAzureClients(builder =>
         {
             builder.AddWebPubSubServiceClient(
-                new Uri(azureServicesOptions.WebPubSubEndpoint),
+                new Uri(webPubSubEndpoint),
                 azureServicesOptions.WebPubSubHub,
                 CloudIdentity.GetCloudIdentity);
         });
