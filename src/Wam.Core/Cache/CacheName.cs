@@ -6,4 +6,6 @@ public static class CacheName
 
     public static string GameDetails(Guid gameId) => $"wam:game:id:{gameId:N}";
     public static string GameDetails(string gameCode) => $"wam:game:code:{gameCode}";
+
+    public static string GameScoreBoard(Guid gameId) => $"wam:game:scoreboard:{gameId:N}";
 }
