@@ -7,4 +7,5 @@ public class AzureServices
     public string WebPubSubHub{ get; set; }
     public string UsersStorageAccountName { get; set; }
     public string GamesStorageAccountName { get; set; }
+    public string ScoresStorageAccountName { get; set; }
 }
