@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Wam.Core.Exceptions;
 using Wam.Core.Identity;
 
 namespace Wam.Core.Configuration;
@@ -32,6 +33,7 @@ public static class ServiceCollectionExtensions
         }
 
         services.AddHexMasterCache(configuration);
+        services.AddExceptionHandler<WamExceptionHandler>();
         return services;
     }
 }

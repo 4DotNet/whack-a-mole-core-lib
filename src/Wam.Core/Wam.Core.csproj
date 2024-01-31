@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Cache\" />
+    <Folder Include="DataTransferObjects\" />
   </ItemGroup>
 
 </Project>
