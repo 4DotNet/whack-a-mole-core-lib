@@ -33,7 +33,6 @@ public static class ServiceCollectionExtensions
         }
 
         services.AddHexMasterCache(configuration);
-        services.AddExceptionHandler<WamExceptionHandler>();
         return services;
     }
 }
