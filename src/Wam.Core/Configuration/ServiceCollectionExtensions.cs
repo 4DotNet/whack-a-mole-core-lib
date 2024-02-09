@@ -1,7 +1,10 @@
-﻿using HexMaster.RedisCache;
+﻿using System.Reflection;
+using HexMaster.RedisCache;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.WebEncoders.Testing;
+using Wam.Core.ErrorCodes;
 using Wam.Core.Exceptions;
 using Wam.Core.Identity;
 
@@ -12,18 +15,35 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddWamCoreConfiguration(
         this IServiceCollection services,
         IConfiguration configuration,
-        bool skipApplicationInsights = false)
+        bool skipApplicationInsights = false,
+        string? daprAppId = null)
     {
-        var azureServicesOptions = configuration.GetSection(AzureServices.SectionName).Get<AzureServices>();
         services.AddHealthChecks();
-        services.AddOptions<AzureServices>().Bind(configuration.GetSection(AzureServices.SectionName)); //.ValidateOnStart();
-        services.AddOptions<ServicesConfiguration>().Bind(configuration.GetSection(ServicesConfiguration.SectionName)); //.ValidateOnStart();
+
+        var azureServicesSection = configuration.GetSection(AzureServices.SectionName);
+        var azureServices = azureServicesSection.Get<AzureServices>();
+        services.AddOptions<AzureServices>().Bind(azureServicesSection); //.ValidateOnStart();
+
+        var wamServicesSection= configuration.GetSection(ServicesConfiguration.SectionName);
+        var wamServices = wamServicesSection.Get<ServicesConfiguration>();
+        services.AddOptions<ServicesConfiguration>().Bind(wamServicesSection); //.ValidateOnStart();
+
+
+
+        if (!string.IsNullOrWhiteSpace(daprAppId))
+        {
+            var daprAppServiceProperty = wamServices.GetType().GetProperty(daprAppId, BindingFlags.GetProperty);
+            var propertyValue = daprAppServiceProperty.GetValue(wamServices);
+
+            services.AddDaprSidekick(config => { config.Sidecar.AppId = propertyValue.ToString(); });
+        }
+
 
         services.AddAzureClients(builder =>
         {
             builder.AddWebPubSubServiceClient(
-                new Uri(azureServicesOptions.WebPubSubEndpoint),
-                azureServicesOptions.WebPubSubHub,
+                new Uri(azureServices.WebPubSubEndpoint),
+                azureServices.WebPubSubHub,
                 CloudIdentity.GetCloudIdentity());
         });
 
@@ -33,6 +53,7 @@ public static class ServiceCollectionExtensions
         }
 
         services.AddHexMasterCache(configuration);
+        services.AddDaprClient();
         return services;
     }
 }
