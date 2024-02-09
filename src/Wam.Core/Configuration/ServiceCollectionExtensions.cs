@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using HexMaster.RedisCache;
+using Man.Dapr.Sidekick;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,10 +33,16 @@ public static class ServiceCollectionExtensions
 
         if (!string.IsNullOrWhiteSpace(daprAppId))
         {
-            var daprAppServiceProperty = wamServices.GetType().GetProperty(daprAppId, BindingFlags.GetProperty);
+            var daprAppServiceProperty = wamServices.GetType().GetProperty(daprAppId);
             var propertyValue = daprAppServiceProperty.GetValue(wamServices);
 
-            services.AddDaprSidekick(config => { config.Sidecar.AppId = propertyValue.ToString(); });
+            services.AddDaprSidekick(config =>
+            {
+                config.Sidecar = new DaprSidecarOptions()
+                {
+                    AppId = propertyValue.ToString()
+                };
+            });
         }
 
 
