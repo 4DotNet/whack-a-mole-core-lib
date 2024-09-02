@@ -1,12 +1,8 @@
-﻿using System.Reflection;
-using HexMaster.RedisCache;
+﻿using HexMaster.RedisCache;
 using Man.Dapr.Sidekick;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.WebEncoders.Testing;
-using Wam.Core.ErrorCodes;
-using Wam.Core.Exceptions;
 using Wam.Core.Identity;
 
 namespace Wam.Core.Configuration;
@@ -30,7 +26,7 @@ public static class ServiceCollectionExtensions
         services.AddOptions<ServicesConfiguration>().Bind(wamServicesSection); //.ValidateOnStart();
 
 
-
+#if DEBUG
         if (!string.IsNullOrWhiteSpace(daprAppId))
         {
             var daprAppServiceProperty = wamServices.GetType().GetProperty(daprAppId);
@@ -44,6 +40,7 @@ public static class ServiceCollectionExtensions
                 };
             });
         }
+#endif
 
 
         services.AddAzureClients(builder =>
