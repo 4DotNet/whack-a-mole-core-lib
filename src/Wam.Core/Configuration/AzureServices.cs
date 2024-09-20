@@ -8,4 +8,5 @@ public class AzureServices
     public string UsersStorageAccountName { get; set; }
     public string GamesStorageAccountName { get; set; }
     public string ScoresStorageAccountName { get; set; }
+    public string VouchersStorageAccountName { get; set; }
 }
