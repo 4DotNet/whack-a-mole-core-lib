@@ -1,8 +1,9 @@
-﻿using HexMaster.RedisCache;
-using Man.Dapr.Sidekick;
+﻿using Man.Dapr.Sidekick;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Wam.Core.Abstractions;
+using Wam.Core.Cache;
 using Wam.Core.Identity;
 
 namespace Wam.Core.Configuration;
@@ -56,8 +57,8 @@ public static class ServiceCollectionExtensions
             services.AddApplicationInsightsTelemetry(configuration);
         }
 
-        services.AddHexMasterCache(configuration);
         services.AddDaprClient();
+        services.AddScoped<IWamCacheService, WamCacheService>();
         return services;
     }
 }
