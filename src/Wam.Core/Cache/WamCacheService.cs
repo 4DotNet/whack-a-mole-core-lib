@@ -67,8 +67,16 @@ public class WamCacheService(
 
     public async Task Invalidate(string cacheKey, CancellationToken? cancellationToken = null)
     {
-
-        var usableCancellationToken = cancellationToken ?? CancellationToken.None;
-        await dapr.DeleteStateAsync(StateStoreName, cacheKey, cancellationToken: usableCancellationToken);
+        try
+        {
+            var usableCancellationToken = cancellationToken ?? CancellationToken.None;
+            logger.LogInformation("Invalidating cache key {cacheKey}", cacheKey);
+            await dapr.DeleteStateAsync(StateStoreName, cacheKey, cancellationToken: usableCancellationToken);
+            logger.LogInformation("Cache key {cacheKey} invalidated successfully", cacheKey);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to invalidate cache key {cacheKey}", cacheKey);
+        }
     }
 }
