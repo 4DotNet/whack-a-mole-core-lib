@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.FeatureManagement;
 using Wam.Core.Abstractions;
 using Wam.Core.Cache;
 using Wam.Core.Identity;
@@ -26,6 +27,7 @@ public static class ServiceCollectionExtensions
         var wamServices = wamServicesSection.Get<ServicesConfiguration>();
         services.AddOptions<ServicesConfiguration>().Bind(wamServicesSection); //.ValidateOnStart();
 
+        services.AddFeatureManagement();
 
 #if DEBUG
         if (!string.IsNullOrWhiteSpace(daprAppId))
