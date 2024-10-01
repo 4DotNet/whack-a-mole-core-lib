@@ -27,6 +27,7 @@ public static class ServiceCollectionExtensions
         var wamServices = wamServicesSection.Get<ServicesConfiguration>();
         services.AddOptions<ServicesConfiguration>().Bind(wamServicesSection); //.ValidateOnStart();
 
+        Console.WriteLine("Adding feature flags options");
         services.AddFeatureManagement();
 
 #if DEBUG
@@ -45,6 +46,7 @@ public static class ServiceCollectionExtensions
         }
 #endif
 
+        Console.WriteLine("Adding Azure clients");
 
         services.AddAzureClients(builder =>
         {
@@ -56,9 +58,11 @@ public static class ServiceCollectionExtensions
 
         if (!skipApplicationInsights)
         {
+            Console.WriteLine("Adding application insights telemetry");
             services.AddApplicationInsightsTelemetry(configuration);
         }
 
+        Console.WriteLine("Adding Dapr and the Dapr Caching Service");
         services.AddDaprClient();
         services.AddScoped<IWamCacheService, WamCacheService>();
         return services;
